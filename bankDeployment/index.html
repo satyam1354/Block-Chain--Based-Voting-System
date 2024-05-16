@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <!-- //npm install -g http-server -->
+     <!-- npm install web3 -->
+    <!-- npm install jquery -->
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="amount">
+        <p id="balance"></p>
+        <button id="deposit">Deposit</button>
+        <button id="withdraw">Withdraw</button>
+    </div>
+    <script src="https://github.com/web3/web3.js.git"></script>
+    <script src=""></script>
+    <script>
+        var contract;
+
+        $(document).ready(function()
+            {
+                web3  = new web3(web3.currentProvider);
+                var address="0xf93986e810a97e988500d39FFD07617D19da3b57";
+                var abi = [
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+              contract = new web3.eth.Contract(abi,address); 
+              contract.methods.getBalance().call().then(function(bal)
+              {
+               $('#balance').html(bal);
+              });
+            });
+    </script>
+
+</body>
+</html>
